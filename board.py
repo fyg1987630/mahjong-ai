@@ -38,10 +38,11 @@ class Board:
         :param num_piece_to_draw: number of remaining pieces which result a draw
         """
         self.num_total_piece, self.num_player, self.num_player_piece = num_total_piece, num_player, num_player_piece
-        self.enable_indicator = enable_indicator
         self.num_piece_to_draw = num_piece_to_draw
         self.pool = []
         self.walls = get_walls(self.num_total_piece)
+        if enable_indicator:
+            self.indicators = random.sample(self.walls, 1)
 
     def deal(self):
         """
@@ -66,3 +67,21 @@ class Board:
         :return:
         """
         self.pool.append(piece)
+
+    def draw_piece(self):
+        """
+        Draw a piece from walls
+        :return: the piece which is drawn
+        """
+        piece = random.sample(self.walls, 1)[0]
+        self.walls.remove(piece)
+        return piece
+
+    def add_indicator(self):
+        """
+        Add an indicator, mainly for dora in Japanese mahjong
+        :return:
+        """
+        piece = random.sample(self.walls, 1)[0]
+        self.walls.remove(piece)
+        self.indicators.append(piece)
